@@ -43,14 +43,17 @@ h2 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: inherit;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 1px 7px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #4c1471;
   cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
   transition: border-color 0.25s;
 }
 
@@ -82,6 +85,7 @@ button:focus-visible {
   background-color: #13254e;
   padding: 20px;
   margin: 1%;
+  position: relative;
 }
 
 p {
@@ -123,7 +127,8 @@ p {
   transform: rotate(45deg) translate(30%, 40%);
   background: #7871ff;
   box-shadow: 32px -34px 0 5px #4000ff;
-  animation: slide 2s infinite ease-in-out alternate;
+  animation: slide 2s ease-in-out alternate;
+  animation-iteration-count: 4;
 }
 
 .loader2:after {
@@ -137,7 +142,8 @@ p {
   background: #dfe8f6;
   transform: rotate(0deg);
   transform-origin: 35px 145px;
-  animation: rotate 2s infinite ease-in-out;
+  animation: rotate 2s ease-in-out;
+  animation-iteration-count: 4;
 }
 
 @keyframes slide {
