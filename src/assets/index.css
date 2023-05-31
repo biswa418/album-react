@@ -106,6 +106,37 @@ textarea {
   margin-left: 5%;
 }
 
+.post {
+  width: 85%;
+  height: max-content;
+  position: relative;
+}
+
+.post-text {
+  width: 98%;
+  border-radius: 7px;
+  padding: 10px;
+  margin: 0 !important;
+  text-transform: none;
+  outline: 1px solid #9ba2b2;
+  background-color: #323131;
+}
+
+.post-text:focus {
+  outline: 1px solid #2959c8;
+  background-color: #13254e94;
+}
+
+.submit {
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  padding: 5px 8px;
+  border-radius: 7px;
+  top: 72%;
+  right: 1%;
+}
+
 ::placeholder {
   color: #acacacda;
 }
