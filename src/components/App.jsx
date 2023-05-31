@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Loader from './Loader';
 import { delUrl, getUrl } from '../constant';
+import { FaCheck, FaRegEdit } from 'react-icons/fa'
 
 function App() {
   const [loading, setLoading] = useState(true)
   const [albums, setAlbums] = useState([]);
   const [error, showError] = useState(false);
-  let [message, showMessage] = useState('None');
+  const [message, showMessage] = useState('None');
+  const [editablePost, setEditPost] = useState(null);
+  const [postValue, setPostValue] = useState('');
+  let inputField = useRef(null);
 
   useEffect(() => {
     //api call
@@ -25,7 +29,6 @@ function App() {
     const newAlbums = albums.filter((album) => {
       return album.id != id
     })
-
     setAlbums(newAlbums)
   }
 
@@ -46,6 +49,41 @@ function App() {
         showMessage(err);
         showError(true);
       })
+  }
+
+  function handleEdit(id, post) {
+    setPostValue(post)
+    setEditPost(id)
+  }
+
+  function handleSave(id) {
+    //to make the post disable
+    setEditPost(null);
+
+    //api call to update
+    fetch(delUrl(id), {
+      method: 'PUT',
+      body: JSON.stringify({
+        id: id,
+        title: postValue,
+        userId: 1,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        let newAlbum = albums.map((album) => {
+          if (json.id === album.id) {
+            return json
+          }
+
+          return album
+        })
+
+        setAlbums(newAlbum)
+      });
   }
 
   return (
@@ -76,7 +114,43 @@ function App() {
               return (
                 <div key={`album-${album.id}`} className='card'>
                   <span>{album.id}.</span>
-                  <p>{album.title}</p>
+
+                  {editablePost != album.id ?
+                    <>
+                      <textarea
+                        type='text'
+                        disabled
+                        ref={inputField}
+                        placeholder={album.title}
+                      >
+                      </textarea>
+
+                      <button
+                        className='edit'
+                        onClick={() => handleEdit(album.id, album.title)}>
+                        <FaRegEdit />
+                      </button>
+                    </>
+                    :
+                    <>
+                      <textarea
+                        type='text'
+                        disabled={false}
+                        ref={inputField}
+                        placeholder={album.title}
+                        value={postValue}
+                        onChange={(e) => setPostValue(e.target.value)}
+                      >
+                      </textarea>
+
+                      <button
+                        className='edit'
+                        onClick={() => handleSave(album.id)}>
+                        <FaCheck />
+                      </button>
+                    </>
+
+                  }
                   <button value={album.id} onClick={handleDelete}>X</button>
                 </div>
               )
