@@ -1,5 +1,5 @@
 <div align="center">
-      <h1> <img src="--" width="80px"><br/>Albums - React</h1>
+      <h1>Albums - React</h1>
 </div>
 
 
